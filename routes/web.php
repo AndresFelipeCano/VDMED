@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::resource('medicamento', 'MedicamentoController');
 
+Route::resource('verificacion', 'VerificacionController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
