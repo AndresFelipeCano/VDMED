@@ -14,7 +14,13 @@ class VerificacionController extends Controller
      */
     public function index()
     {
-        //
+        $verificaciones = Verificacion::all();
+
+        return view(
+            'verificaciones.index', [
+                'verificaciones' => $verificaciones
+            ]
+        );
     }
 
     /**
@@ -24,7 +30,7 @@ class VerificacionController extends Controller
      */
     public function create()
     {
-        //
+        return view('verificaciones.create');
     }
 
     /**
@@ -46,7 +52,11 @@ class VerificacionController extends Controller
      */
     public function show(Verificacion $verificacion)
     {
-        //
+        return view(
+            'verificaciones.show', [
+                'verificacion' => $verificacion
+            ]
+        );
     }
 
     /**

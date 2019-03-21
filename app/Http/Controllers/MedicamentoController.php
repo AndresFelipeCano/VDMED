@@ -14,7 +14,12 @@ class MedicamentoController extends Controller
      */
     public function index()
     {
-        //
+        $medicamentos = Medicamento::all();
+        return view(
+            'medicamentos.index', [
+                'medicamentos' => $medicamentos
+            ]
+        );
     }
 
     /**
@@ -24,7 +29,7 @@ class MedicamentoController extends Controller
      */
     public function create()
     {
-        //
+        return view('medicamentos.create');
     }
 
     /**
@@ -57,7 +62,11 @@ class MedicamentoController extends Controller
      */
     public function edit(Medicamento $medicamento)
     {
-        //
+        return view(
+            'medicamentos.show', [
+                'medicamento' => $medicamento
+            ]
+        );
     }
 
     /**
