@@ -9,32 +9,32 @@
                 <div class="card-header">{{ __('Verificar medicamento') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('verificacion.create') }}">
+                    <form method="POST" action="{{ route('verificacion.check', $verificacion) }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="code1" class="col-md-4 col-form-label text-md-right">{{ __('Código 1') }}</label>
+                            <label for="token" class="col-md-4 col-form-label text-md-right">{{ __('Código 1') }}</label>
 
                             <div class="col-md-6">
-                                <input id="code1" type="text" class="form-control{{ $errors->has('code1') ? ' is-invalid' : '' }}" name="code1" value="{{ old('code1') }}" required autofocus>
+                                <input id="token" type="text" class="form-control{{ $errors->has('token') ? ' is-invalid' : '' }}" name="token" value="{{ old('token') }}" required autofocus>
 
-                                @if ($errors->has('code1'))
+                                @if ($errors->has('token'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('code1') }}</strong>
+                                        <strong>{{ $errors->first('token') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="code2" class="col-md-4 col-form-label text-md-right">{{ __('Código 2') }}</label>
+                            <label for="hash" class="col-md-4 col-form-label text-md-right">{{ __('Código 2') }}</label>
 
                             <div class="col-md-6">
-                                <input id="code2" type="text" class="form-control{{ $errors->has('code2') ? ' is-invalid' : '' }}" name="code2" value="{{ old('code2') }}" required autofocus>
+                                <input id="hash" type="text" class="form-control{{ $errors->has('hash') ? ' is-invalid' : '' }}" name="hash" value="{{ old('hash') }}" required autofocus>
 
-                                @if ($errors->has('code2'))
+                                @if ($errors->has('hash'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('code2') }}</strong>
+                                        <strong>{{ $errors->first('hash') }}</strong>
                                     </span>
                                 @endif
                             </div>

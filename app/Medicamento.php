@@ -7,14 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Medicamento extends Model
 {
     protected $fillable = [
+        'lote',
         'fuente',
         'barcode',
         'nombre',
-        'invima'
+        'invima',
+        'expires',
+        'import',
+        'santiary'
+
     ];
 
     public function verificacion()
     {
-        return $this->hasMany(Verificaton::class);
+        return $this->hasOne(Verificacion::class);
     }
 }

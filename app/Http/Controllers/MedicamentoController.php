@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Medicamento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Verificacion;
 
 class MedicamentoController extends Controller
 {
@@ -40,7 +42,47 @@ class MedicamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $lote = $request->input('lote');
+        $fuente = $request->input('fuente');
+        $barcode = $request->input('barcode');
+        $nombre = $request->input('nombre');
+        $invima = $request->input('invima');
+        $expires = $request->input('expires');
+        $import_data = $request->input('import_data');
+        $sanitary = $request->input('sanitary');
+
+        $text
+            = $lote.
+            $fuente.
+            $barcode.
+            $nombre.
+            $invima.
+            $expires.
+            $import_data.
+            $sanitary;
+
+        $hash = Hash::make($text);
+
+        $medicamento = new Medicamento();
+        $medicamento->lote = $lote;
+        $medicamento->fuente = $fuente;
+        $medicamento->barcode = $barcode;
+        $medicamento->nombre = $nombre;
+        $medicamento->invima = $invima;
+        $medicamento->expires = $expires;
+        $medicamento->import_data = $import_data;
+        $medicamento->sanitary = $sanitary;
+        $medicamento->save();
+        $token = encrypt($medicamento->id);
+        $verification = new Verificacion();
+        $verification->token = $token;
+        $verification->hash = $hash;
+        $verification->medicamento()->associate($medicamento);
+        $verification->save();
+
+
+
     }
 
     /**
@@ -62,11 +104,7 @@ class MedicamentoController extends Controller
      */
     public function edit(Medicamento $medicamento)
     {
-        return view(
-            'medicamentos.show', [
-                'medicamento' => $medicamento
-            ]
-        );
+        //
     }
 
     /**
@@ -78,7 +116,41 @@ class MedicamentoController extends Controller
      */
     public function update(Request $request, Medicamento $medicamento)
     {
-        //
+        $lote = $request->input('lote');
+        $fuente = $request->input('fuente');
+        $barcode = $request->input('barcode');
+        $nombre = $request->input('nombre');
+        $invima = $request->input('invima');
+        $expires = $request->input('expires');
+        $import_data = $request->input('import_data');
+        $sanitary = $request->input('sanitary');
+
+        $text
+            = $lote .
+            $fuente .
+            $barcode .
+            $nombre .
+            $invima .
+            $expires .
+            $import_data .
+            $sanitary;
+
+        $hash = Hash::make($text);
+
+        $medicamento->lote = $lote;
+        $medicamento->fuente = $fuente;
+        $medicamento->barcode = $barcode;
+        $medicamento->nombre = $nombre;
+        $medicamento->invima = $invima;
+        $medicamento->expires = $expires;
+        $medicamento->import_data = $import_data;
+        $medicamento->sanitary = $sanitary;
+        $medicamento->save();
+        $token = encrypt($medicamento->id);
+        $verification = $medicamento->verificacion;
+        $verification->token = $token;
+        $verification->hash = $hash;
+        $verification->save();
     }
 
     /**
@@ -89,6 +161,9 @@ class MedicamentoController extends Controller
      */
     public function destroy(Medicamento $medicamento)
     {
-        //
+        $medicamento->verificacion()->first()->delete();
+        $medicamento->delete();
+
+        return redirect()->route('medicamento.index');
     }
 }

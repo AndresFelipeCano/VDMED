@@ -19,6 +19,7 @@ class CreateVerificacionsTable extends Migration
             $table->string('token');
             $table->string('hash');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -20,7 +20,11 @@ class CreateMedicamentosTable extends Migration
             $table->string('barcode');
             $table->string('nombre');
             $table->string('invima');
+            $table->string('expires');
+            $table->string('import_data');
+            $table->string('sanitary');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

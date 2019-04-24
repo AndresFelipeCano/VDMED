@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Verificacion;
 use Illuminate\Http\Request;
+use App\Medicamento;
 
 class VerificacionController extends Controller
 {
@@ -28,8 +29,16 @@ class VerificacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Medicamento $medicamento)
     {
+        $verificacion = $medicamento->verificacion;
+        return view(
+            'verificaciones.create',
+            [
+                'verificacion' => $verificacion,
+                'medicamento'   =>  $medicamento
+            ]
+        );
         return view('verificaciones.create');
     }
 
@@ -39,9 +48,19 @@ class VerificacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Verificacion $verificacion)
     {
-        //
+        $id = decrypt($request->input('token'));
+        if ($verificacion->medicamento_id === $id
+            && $verificacion->hash === $request->input('hash')
+        ) {
+            return redirect()->route('verificacion.show', $verificacion);
+        } else {
+            return redirect()->back();
+        }
+
+
+
     }
 
     /**
@@ -54,7 +73,7 @@ class VerificacionController extends Controller
     {
         return view(
             'verificaciones.show', [
-                'verificacion' => $verificacion
+                'verificacion' => $verificacion,
             ]
         );
     }

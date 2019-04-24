@@ -17,7 +17,12 @@ Route::get('/', function () {
 
 Route::resource('medicamento', 'MedicamentoController');
 
-Route::resource('verificacion', 'VerificacionController');
+Route::get('verificacion/{medicamento}', 'VerificacionController@create')->name( 'verificacion.create');
+Route::get('verificacion/success/{verification}', 'VerificacionController@show')->name( 'verificacion.show');
+Route::post('verificacion/{verificacion}', 'VerificacionController@store')->name( 'verificacion.check');
+
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
