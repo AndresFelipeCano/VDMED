@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Verificacion;
 use Illuminate\Http\Request;
 use App\Medicamento;
+use Illuminate\Support\Facades\Hash;
 
 class VerificacionController extends Controller
 {
@@ -54,17 +55,28 @@ class VerificacionController extends Controller
 
         $lote = $medicamento->lote;
 
-        $key = $medicamento->key();
+        $key
+            = $lote->id .
+            $lote->nombre .
+            $lote->importador .
+            $lote->distribuidor .
+            $lote->numero .
+            $lote->fecha_vencimiento .
+            $lote->invima .
+            $lote->created_at;
+
+        $dkey = decrypt($medicamento->key);
 
         $token = $verificacion->token;
+
         $hash = $verificacion->hash;
 
-        $dkey = encrypt($lote->__toString() . ($medicamento->number));
+        $dhash = $request->input('hash');
+
+        $dtoken = $request->input('token');
 
         if ($key === $dkey) {
-            $dtoken = decrypt($key);
             if ($token === $dtoken) {
-                $dhash = Hash::make($key);
                 if ($hash === $dhash) {
                     return redirect()->route('verificacion.show', $verificacion);
                 } else {

@@ -57,13 +57,23 @@ class MedicamentoController extends Controller
         $lote->invima = $request->input('invima');
         $lote->save();
 
+        $stringKey
+            = $lote->id .
+            $lote->nombre .
+            $lote->importador .
+            $lote->distribuidor .
+            $lote->numero .
+            $lote->fecha_vencimiento .
+            $lote->invima .
+            $lote->created_at;
+
         $cantidad = (int)$request->cantidad;
         for ($i = 0; $i < $cantidad; $i++) {
             $medicamento = new Medicamento();
             $medicamento->numero = $i + 1;
             $medicamento->lote()->associate($lote);
 
-            $key = encrypt($lote->__toString() . ($i + 1));
+            $key = encrypt($stringKey);
             $token = encrypt($key);
             $hash = Hash::make($key);
 
