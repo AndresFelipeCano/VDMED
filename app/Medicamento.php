@@ -7,19 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Medicamento extends Model
 {
     protected $fillable = [
-        'lote',
-        'fuente',
-        'barcode',
-        'nombre',
-        'invima',
-        'expires',
-        'import',
-        'santiary'
-
+        'numero',
+        'key'
     ];
 
     public function verificacion()
     {
         return $this->hasOne(Verificacion::class);
+    }
+
+    public function lote()
+    {
+        return $this->belongsTo(Lote::class, 'lote_id');
     }
 }

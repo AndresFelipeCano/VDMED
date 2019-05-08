@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMedicamentosTable extends Migration
+class CreateLotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateMedicamentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('medicamentos', function (Blueprint $table) {
+        Schema::create('lotes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('lote_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned()->default(0);
+            $table->string('nombre');
+            $table->string('importador');
+            $table->string('distribuidor');
             $table->string('numero');
-            $table->longText('key');
+            $table->string('fecha_vencimiento');
+            $table->string('invima');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +33,6 @@ class CreateMedicamentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medicamentos');
+        Schema::dropIfExists('lotes');
     }
 }

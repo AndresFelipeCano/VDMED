@@ -12,15 +12,13 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Lote</th>
-                            <th scope="col">Fuente</th>
-                            <th scope="col">Código</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Invima</th>
-                            <th scope="col">Caducidad</th>
-                            <th scope="col">Importe</th>
-                            <th scope="col">Reg. Sanitario</th>
-                            <th scope="col">Creado en</th>
+                            <th scope="col">Nombre / Lote</th>
+                            <th scope="col">Importador / Lote</th>
+                            <th scope="col">Distribuidor / Lote</th>
+                            <th scope="col">Número / Lote</th>
+                            <th scope="col">Fecha vencimiento / Lote</th>
+                            <th scope="col">Registro Invima / Lote</th>
+                            <th scope="col">Número / Medicamento</th>
                             <th scope="col"><a href="{{route('medicamento.create')}}"><button class="btn btn-primary">Crear</button></a></th>
                         </tr>
                     </thead>
@@ -32,30 +30,27 @@
                                     @csrf
                                     @method('put')
                                     <td>
-                                        <input type="text" name="lote" value="{{$medicamento->lote}}" class="form-control" autocomplete="off">
+                                        <input type="text" name="lote" value="{{$medicamento->lote->nombre}}" class="form-control" autocomplete="off">
                                         <button type="submit" class="btn btn-success btn-small mt-2">Guardar</button>
                                         <a href="{{route('verificacion.create', $medicamento)}}"><button type="submit" class="btn btn-link btn-small mt-2">Verificar</button></a>
                                     </td>
                                     <td>
-                                        <input type="text" name="fuente" value="{{$medicamento->fuente}}" class="form-control" autocomplete="off">
+                                        <input type="text" name="fuente" value="{{$medicamento->lote->importador}}" class="form-control" autocomplete="off">
                                     </td>
                                     <td>
-                                        <input type="text" name="barcode" value="{{$medicamento->barcode}}" class="form-control" autocomplete="off">
+                                        <input type="text" name="barcode" value="{{$medicamento->lote->distribuidor}}" class="form-control" autocomplete="off">
                                     </td>
                                     <td>
-                                        <input type="text" name="nombre" value="{{$medicamento->nombre}}" class="form-control" autocomplete="off">
+                                        <input type="text" name="nombre" value="{{$medicamento->lote->numero}}" class="form-control" autocomplete="off">
                                     </td>
                                     <td>
-                                        <input type="text" name="invima" value="{{$medicamento->invima}}" class="form-control" autocomplete="off">
+                                        <input type="text" name="invima" value="{{$medicamento->lote->fecha_vencimiento}}" class="form-control" autocomplete="off">
                                     </td>
                                     <td>
-                                        <input type="text" name="expires" value="{{$medicamento->expires}}" class="form-control" autocomplete="off">
+                                        <input type="text" name="expires" value="{{$medicamento->lote->invima}}" class="form-control" autocomplete="off">
                                     </td>
                                     <td>
-                                        <input type="text" name="import_data" value="{{$medicamento->import_data}}" class="form-control" autocomplete="off">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="sanitary" value="{{$medicamento->sanitary}}" class="form-control" autocomplete="off">
+                                        <input type="text" name="import_data" value="{{$medicamento->numero}}" class="form-control" autocomplete="off">
                                     </td>
                                 </form>
                                 <td>{{$medicamento->created_at}}</td>

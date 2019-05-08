@@ -6,6 +6,9 @@ use App\Medicamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Verificacion;
+use App\Lote;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class MedicamentoController extends Controller
 {
@@ -42,47 +45,40 @@ class MedicamentoController extends Controller
      */
     public function store(Request $request)
     {
+        $user = (Auth::check()) ? Auth::user() : User::find(1);
 
-        $lote = $request->input('lote');
-        $fuente = $request->input('fuente');
-        $barcode = $request->input('barcode');
-        $nombre = $request->input('nombre');
-        $invima = $request->input('invima');
-        $expires = $request->input('expires');
-        $import_data = $request->input('import_data');
-        $sanitary = $request->input('sanitary');
+        $lote = new Lote();
 
-        $text
-            = $lote.
-            $fuente.
-            $barcode.
-            $nombre.
-            $invima.
-            $expires.
-            $import_data.
-            $sanitary;
+        $lote->nombre = $request->input('nombre');
+        $lote->importador = $request->input('importador');
+        $lote->distribuidor = $request->input('distribuidor');
+        $lote->numero = $request->input('numero');
+        $lote->fecha_vencimiento = $request->input('fecha_vencimiento');
+        $lote->invima = $request->input('invima');
+        $lote->save();
 
-        $hash = Hash::make($text);
+        $cantidad = (int)$request->cantidad;
+        for ($i = 0; $i < $cantidad; $i++) {
+            $medicamento = new Medicamento();
+            $medicamento->numero = $i + 1;
+            $medicamento->lote()->associate($lote);
 
-        $medicamento = new Medicamento();
-        $medicamento->lote = $lote;
-        $medicamento->fuente = $fuente;
-        $medicamento->barcode = $barcode;
-        $medicamento->nombre = $nombre;
-        $medicamento->invima = $invima;
-        $medicamento->expires = $expires;
-        $medicamento->import_data = $import_data;
-        $medicamento->sanitary = $sanitary;
-        $medicamento->save();
-        $token = encrypt($medicamento->id);
-        $verification = new Verificacion();
-        $verification->token = $token;
-        $verification->hash = $hash;
-        $verification->medicamento()->associate($medicamento);
-        $verification->save();
+            $key = encrypt($lote->__toString() . ($i + 1));
+            $token = encrypt($key);
+            $hash = Hash::make($key);
 
+            $medicamento->key = $key;
+            $medicamento->save();
 
+            $verificacion = new Verificacion();
+            $verificacion->token = $token;
+            $verificacion->hash = $hash;
 
+            $verificacion->user()->associate($user);
+            $verificacion->medicamento()->associate($medicamento);
+            $verificacion->save();
+        }
+        return redirect()->route('medicamento.index');
     }
 
     /**

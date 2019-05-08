@@ -50,17 +50,32 @@ class VerificacionController extends Controller
      */
     public function store(Request $request, Verificacion $verificacion)
     {
-        $id = decrypt($request->input('token'));
-        if ($verificacion->medicamento_id === $id
-            && $verificacion->hash === $request->input('hash')
-        ) {
-            return redirect()->route('verificacion.show', $verificacion);
+        $medicamento = $verificacion->medicamento;
+
+        $lote = $medicamento->lote;
+
+        $key = $medicamento->key();
+
+        $token = $verificacion->token;
+        $hash = $verificacion->hash;
+
+        $dkey = encrypt($lote->__toString() . ($medicamento->number));
+
+        if ($key === $dkey) {
+            $dtoken = decrypt($key);
+            if ($token === $dtoken) {
+                $dhash = Hash::make($key);
+                if ($hash === $dhash) {
+                    return redirect()->route('verificacion.show', $verificacion);
+                } else {
+                    return redirect()->back();
+                }
+            } else {
+                return redirect()->back();
+            }
         } else {
             return redirect()->back();
         }
-
-
-
     }
 
     /**

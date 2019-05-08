@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Registrar medicamento') }}</div>
+                <div class="card-header">{{ __('Registrar lote de medicamentos') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('medicamento.store') }}">
@@ -27,49 +27,63 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="lote" class="col-md-4 col-form-label text-md-right">{{ __('Lote') }}</label>
+                            <label for="importador" class="col-md-4 col-form-label text-md-right">{{ __('Importador') }}</label>
 
                             <div class="col-md-6">
-                                <input id="lote" type="text" class="form-control{{ $errors->has('lote') ? ' is-invalid' : '' }}" name="lote" value="{{ old('lote') }}" required autofocus>
+                                <input id="importador" type="text" class="form-control{{ $errors->has('importador') ? ' is-invalid' : '' }}" name="importador" value="{{ old('importador') }}" required autofocus>
 
-                                @if ($errors->has('lote'))
+                                @if ($errors->has('importador'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('lote') }}</strong>
+                                        <strong>{{ $errors->first('importador') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="fuente" class="col-md-4 col-form-label text-md-right">{{ __('Fuente') }}</label>
+                            <label for="distribuidor" class="col-md-4 col-form-label text-md-right">{{ __('Distribuidor') }}</label>
 
                             <div class="col-md-6">
-                                <input id="fuente" type="text" class="form-control{{ $errors->has('fuente') ? ' is-invalid' : '' }}" name="fuente" value="{{ old('fuente') }}" required autofocus>
+                                <input id="distribuidor" type="text" class="form-control{{ $errors->has('distribuidor') ? ' is-invalid' : '' }}" name="distribuidor" value="{{ old('distribuidor') }}" required autofocus>
 
-                                @if ($errors->has('fuente'))
+                                @if ($errors->has('distribuidor'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('fuente') }}</strong>
+                                        <strong>{{ $errors->first('distribuidor') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="barcode" class="col-md-4 col-form-label text-md-right">{{ __('Código de barras') }}</label>
+                            <label for="numero" class="col-md-4 col-form-label text-md-right">{{ __('Número') }}</label>
 
                             <div class="col-md-6">
-                                <input id="barcode" type="text" class="form-control{{ $errors->has('barcode') ? ' is-invalid' : '' }}" name="barcode" value="{{ old('barcode') }}" required autofocus>
+                                <input id="numero" type="text" class="form-control{{ $errors->has('numero') ? ' is-invalid' : '' }}" name="numero" value="{{ old('numero') }}" required autofocus>
 
-                                @if ($errors->has('barcode'))
+                                @if ($errors->has('numero'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('barcode') }}</strong>
+                                        <strong>{{ $errors->first('numero') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="invima" class="col-md-4 col-form-label text-md-right">{{ __('Registro INVIMA') }}</label>
+                            <label for="fecha_vencimiento" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de vencimiento') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="fecha_vencimiento" type="text" class="form-control{{ $errors->has('fecha_vencimiento') ? ' is-invalid' : '' }}" name="fecha_vencimiento" value="{{ old('fecha_vencimiento') }}" required autofocus>
+
+                                @if ($errors->has('fecha_vencimiento'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('fecha_vencimiento') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="invima" class="col-md-4 col-form-label text-md-right">{{ __('Registro invima') }}</label>
 
                             <div class="col-md-6">
                                 <input id="invima" type="text" class="form-control{{ $errors->has('invima') ? ' is-invalid' : '' }}" name="invima" value="{{ old('invima') }}" required autofocus>
@@ -83,42 +97,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="expires" class="col-md-4 col-form-label text-md-right">{{ __('Registro de expiración') }}</label>
+                            <label for="cantidad" class="col-md-4 col-form-label text-md-right">{{ __('Cantidad') }}</label>
 
                             <div class="col-md-6">
-                                <input id="expires" type="text" class="form-control{{ $errors->has('expires') ? ' is-invalid' : '' }}" name="expires" value="{{ old('expires') }}" required autofocus>
+                                <input id="cantidad" type="number" class="form-control{{ $errors->has('cantidad') ? ' is-invalid' : '' }}" name="cantidad" value="{{ old('cantidad') }}" required autofocus>
 
-                                @if ($errors->has('expires'))
+                                @if ($errors->has('cantidad'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('expires') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="import_data" class="col-md-4 col-form-label text-md-right">{{ __('Datos de importación') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="import_data" type="text" class="form-control{{ $errors->has('import_data') ? ' is-invalid' : '' }}" name="import_data" value="{{ old('import_data') }}" required autofocus>
-
-                                @if ($errors->has('import_data'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('import_data') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="sanitary" class="col-md-4 col-form-label text-md-right">{{ __('Registro sanitario') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="sanitary" type="text" class="form-control{{ $errors->has('sanitary') ? ' is-invalid' : '' }}" name="sanitary" value="{{ old('sanitary') }}" required autofocus>
-
-                                @if ($errors->has('sanitary'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('sanitary') }}</strong>
+                                        <strong>{{ $errors->first('cantidad') }}</strong>
                                     </span>
                                 @endif
                             </div>
