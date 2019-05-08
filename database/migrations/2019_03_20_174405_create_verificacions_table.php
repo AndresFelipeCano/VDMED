@@ -16,6 +16,7 @@ class CreateVerificacionsTable extends Migration
         Schema::create('verificacions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('medicamento_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->longText('token');
             $table->longText('hash');
             $table->timestamps();

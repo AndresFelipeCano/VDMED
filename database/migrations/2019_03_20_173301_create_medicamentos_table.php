@@ -16,7 +16,6 @@ class CreateMedicamentosTable extends Migration
         Schema::create('medicamentos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('lote_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned()->default(0);
             $table->string('numero');
             $table->longText('key');
             $table->timestamps();
